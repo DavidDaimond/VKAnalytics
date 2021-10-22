@@ -1,5 +1,7 @@
 import requests
 
+from config import *
+
 
 class VKData:
     """
@@ -21,10 +23,10 @@ class VKData:
 
 class Person(VKData):
 
-    def __init__(self, token, person_id):
+    def __init__(self, token, person_id, data=None):
         super(Person, self).__init__(token)
         self.id = person_id
-        self.data = {}
+        self.data = {} if data is None else data
 
     def parse_data(self, fields=None):
         """
@@ -32,4 +34,18 @@ class Person(VKData):
         :param fields: string with fields, separated by commas
         :return:
         """
-        pass
+
+        params = {
+                   'v': VERSION,
+                   'access_token': self.token,
+                   'user_id': self.id,
+        }
+
+        if not (fields is None):
+            params['fields'] = fields
+
+        req = requests.get("http://api.vk.com/method/users.get",
+                           params=params)
+
+    def get_data(self):
+        return self.data.copy()
