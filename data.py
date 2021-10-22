@@ -1,7 +1,7 @@
 import requests
 
 from config import *
-
+from exceptions import *
 
 class VKData:
     """
@@ -47,5 +47,17 @@ class Person(VKData):
         req = requests.get("http://api.vk.com/method/users.get",
                            params=params)
 
+        response = req.json()
+
+        if 'response' not in response:
+            if response['error']['error_code'] == 29:
+                raise ReachedLimitError()
+            else:
+                raise APIResponseError(response['error']['error_code'], response['error']['error_msg'])
+
+        self.data.update(response['response'][0])
+        print('Data was successfully updated')
+
     def get_data(self):
         return self.data.copy()
+
