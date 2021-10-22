@@ -1,4 +1,6 @@
-# parent class for other VK objects. This class contain main structure of every VK object classes
+import requests
+
+
 class VKData:
     """
     Parent class for other VK objects. This class contain main structure of every Object classes.
@@ -14,4 +16,20 @@ class VKData:
         pass
 
     def give_data(self):
+        pass
+
+
+class Person(VKData):
+
+    def __init__(self, token, person_id):
+        super(Person, self).__init__(token)
+        self.id = person_id
+        self.data = {}
+
+    def parse_data(self, fields=None):
+        """
+
+        :param fields: string with fields, separated by commas
+        :return:
+        """
         pass
