@@ -1,3 +1,6 @@
+from data import Person
+
+
 class VKVisual:
     """
     parent class for all other Visual classes. Visual classes uses for visualize data.
@@ -14,3 +17,11 @@ class VKVisual:
         # show data from self.data with parameters **params
         print(**params)
         print(self.data)
+
+
+class FriendsField(VKVisual):
+    def __init__(self, person: Person, prepared: bool = False):
+        self.person = person
+        if not prepared:
+            self.person.parse_data(friends=True)
+        pass
