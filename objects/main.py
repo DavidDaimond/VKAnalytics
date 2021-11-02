@@ -91,3 +91,16 @@ class Person(VKData):
 
     def get_data(self):
         return self.data.copy()
+
+
+# class Friend(Person):
+#     def __init__(self, token, person_id, main_friend, data=None):
+#         super(Friend, self).__init__(token, person_id, data)
+#         self.friend = main_friend
+#
+#
+# class FriendsList(VKData):
+#
+#     def __init__(self, token, id_list: list):
+#         super(FriendsList, self).__init__(token)
+#         self.id_list = list
