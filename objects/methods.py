@@ -1,4 +1,7 @@
 from objects.main import *
+from config import *
+
+from time import sleep
 
 
 def get_friendslist(person, prepared=False):
@@ -11,3 +14,12 @@ def get_friendslist(person, prepared=False):
         fl = [Person(person.token, friend['id'], friend) for friend in person.data['friends']['items']]
 
     return fl
+
+
+def get_mutualsdict(fl, interval=MASS_REQ_INTERVAL):
+    md = {}
+    for person in fl:
+        person.parse_friends()
+        md[person.id] = person.data['friends']['items']
+        sleep(interval)
+    return md
