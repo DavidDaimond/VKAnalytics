@@ -1,25 +1,39 @@
-from objects.main import *
+import requests
+
 from config import *
+from exceptions import *
 
 from time import sleep
 
 
-def get_friendslist(person, prepared=False):
-    if not prepared:
-        person.parse_friends()
+def error_handler(req_func):
+    def req_with_handler(**kwargs):
+        response = req_func(**kwargs)
 
-    if type(person.data['friends']['items'][0]) is int:
-        fl = [Person(person.token, friend) for friend in person.data['friends']['items']]
-    else:
-        fl = [Person(person.token, friend['id'], friend) for friend in person.data['friends']['items']]
+        if 'response' not in response:
+            if response['error']['error_code'] == 29:
+                raise ReachedLimitError()
+            else:
+                raise APIResponseError(response['error']['error_code'], response['error']['error_msg'])
 
-    return fl
+        return response
+    return req_with_handler
 
 
-def get_mutualsdict(fl, interval=MASS_REQ_INTERVAL):
-    md = {}
-    for person in fl:
-        person.parse_friends()
-        md[person.id] = person.data['friends']['items']
-        sleep(interval)
-    return md
+@error_handler
+def vk_request(method_name, params):
+    api_url = 'http://api.vk.com/method/'
+    req = requests.get(api_url + method_name,
+                       params=params)
+
+    response = req.json()
+
+    return response
+
+
+def users_get(params):
+    return vk_request(method_name='users.get', params=params)
+
+
+def friends_get(params):
+    return vk_request(method_name='friends.get', params=params)

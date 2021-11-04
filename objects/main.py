@@ -2,6 +2,7 @@ import requests
 
 from config import *
 from exceptions import *
+from objects.methods import *
 
 
 class VKData:
@@ -28,6 +29,10 @@ class Person(VKData):
         super(Person, self).__init__(token)
         self.id = person_id
         self.data = {} if data is None else data
+        self.base_params = {
+                   'v': VERSION,
+                   'access_token': self.token
+        }
 
     def parse_data(self, fields=None, friends=False):
         """
@@ -38,54 +43,30 @@ class Person(VKData):
         :return:
         """
 
-        params = {
-                   'v': VERSION,
-                   'access_token': self.token,
-                   'user_id': self.id,
-        }
+        params = self.base_params.copy()
+        params['user_id'] = self.id
 
         if not (fields is None):
             params['fields'] = fields
 
-        req = requests.get("http://api.vk.com/method/users.get",
-                           params=params)
-
-        response = req.json()
-
-        if 'response' not in response:
-            if response['error']['error_code'] == 29:
-                raise ReachedLimitError()
-            else:
-                raise APIResponseError(response['error']['error_code'], response['error']['error_msg'])
+        response = users_get(params)
 
         self.data.update(response['response'][0])
-        print('Data was successfully updated')
-
+        print('Data was successfully parsed')
         if friends:
             self.parse_friends()
 
     def parse_friends(self, fields=None):
 
-        params = {
-                   'v': VERSION,
-                   'access_token': self.token,
-                   'user_id': self.id,
-        }
+        params = self.base_params.copy()
+        params['user_id'] = self.id
 
         if not (fields is None):
             params['fields'] = fields
 
-        req = requests.get("http://api.vk.com/method/friends.get",
-                           params=params)
+        response = users_get(params)
 
-        response = req.json()
-
-        if 'response' not in response:
-            if response['error']['error_code'] == 29:
-                raise ReachedLimitError()
-            else:
-                raise APIResponseError(response['error']['error_code'], response['error']['error_msg'])
-
+        self.data.update(response['response'][0])
         self.data['friends'] = response['response']
         print('Friends was successfully parsed')
 
