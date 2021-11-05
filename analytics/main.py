@@ -21,3 +21,8 @@ class VKAnalytic:
         print(**params)
         print(self.data)
 
+
+class PersonDataset(VKAnalytic):
+    """
+    class for parsing person data and structure it into datasets
+    """
