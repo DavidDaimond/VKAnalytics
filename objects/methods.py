@@ -31,9 +31,20 @@ def vk_request(method_name, params):
     return response
 
 
+# The name of functions is similar to VK API methods, but translated from CamelCase to snake_case
+
+
 def users_get(params):
     return vk_request(method_name='users.get', params=params)
 
 
 def friends_get(params):
     return vk_request(method_name='friends.get', params=params)
+
+
+def users_get_subscriptions(params):
+    return vk_request(method_name='users.getSubscriptions', params=params)
+
+
+def users_get_followers(params):
+    return vk_request(method_name='users.getFollowers', params=params)

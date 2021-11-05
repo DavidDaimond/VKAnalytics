@@ -34,7 +34,7 @@ class Person(VKData):
                    'access_token': self.token
         }
 
-    def parse_data(self, fields=None, friends=False):
+    def parse_data(self, fields=None, friends=False, subs=False):
         """
 
         :param
@@ -53,8 +53,12 @@ class Person(VKData):
 
         self.data.update(response['response'][0])
         print('Data was successfully parsed')
+
         if friends:
             self.parse_friends()
+
+        if subs:
+            self.parse_subscriptions()
 
     def parse_friends(self, fields=None):
 
@@ -64,11 +68,22 @@ class Person(VKData):
         if not (fields is None):
             params['fields'] = fields
 
-        response = users_get(params)
+        response = friends_get(params)
 
-        self.data.update(response['response'][0])
         self.data['friends'] = response['response']
         print('Friends was successfully parsed')
+
+    def parse_subscriptions(self, fields):
+        params = self.base_params.copy()
+        params['user_id'] = self.id
+
+        if not (fields is None):
+            params['fields'] = fields
+
+        response = users_get_subscriptions(params)
+
+        self.data['subs'] = response['response']
+        print('Subs was successfully parsed')
 
     def get_data(self):
         return self.data.copy()
