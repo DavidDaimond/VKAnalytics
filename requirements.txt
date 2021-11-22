@@ -1,0 +1,5 @@
+numpy~=1.19.5
+matplotlib~=3.4.1
+scikit-learn~=1.0
+requests~=2.25.1
+setuptools~=49.2.1

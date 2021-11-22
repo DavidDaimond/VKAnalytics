@@ -19,7 +19,7 @@ class VKData:
         """
         pass
 
-    def give_data(self):
+    def save_data(self):
         pass
 
 
@@ -69,6 +69,11 @@ class Person(VKData):
 
     def get_data(self):
         return self.data.copy()
+
+
+class Post(VKData):
+    def __init__(self, ):
+        pass
 
 
 # class Friend(Person):

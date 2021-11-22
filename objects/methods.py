@@ -2,14 +2,12 @@ import requests
 
 from config import *
 from exceptions import *
-
 from time import sleep
 
 
-def error_handler(req_func):
+def bad_response_handler(req_func):
     def req_with_handler(**kwargs):
         response = req_func(**kwargs)
-
         if 'response' not in response:
             if response['error']['error_code'] == 29:
                 raise ReachedLimitError()
@@ -20,7 +18,7 @@ def error_handler(req_func):
     return req_with_handler
 
 
-@error_handler
+@bad_response_handler
 def vk_request(method_name, params):
     api_url = 'http://api.vk.com/method/'
     req = requests.get(api_url + method_name,
