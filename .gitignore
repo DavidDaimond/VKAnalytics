@@ -2,5 +2,4 @@
 .idea
 .idea/*.xml
 *.ipynb
-.idea
 misc.xml
