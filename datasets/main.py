@@ -5,9 +5,8 @@ class VKDataset:
     def __init__(self):
         self.data = None
 
-    def get_data(self, *args):
-        # get data from *args and put it into self.data for next operations
-        self.data = list(*args)
+    def create(self, *args):
+        pass
 
     def process_data(self, **params):
         pass

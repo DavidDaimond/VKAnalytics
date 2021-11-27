@@ -1,7 +1,6 @@
 from objects.main import *
 
 __all__ = [
-    'VKData',
+    'VKObject',
     'Person',
-    'FriendsList'
 ]
