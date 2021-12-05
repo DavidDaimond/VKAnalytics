@@ -3,3 +3,4 @@
 .idea/*.xml
 *.ipynb
 misc.xml
+/venv/

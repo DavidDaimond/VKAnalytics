@@ -1,4 +1,4 @@
-from visual.main import *
+from processing.main import *
 
 __all__ = [
     'VKVisual',
