@@ -4,3 +4,4 @@
 *.ipynb
 misc.xml
 /venv/
+__pycache__/
