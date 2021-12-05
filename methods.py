@@ -2,7 +2,6 @@ import requests
 
 from config import *
 from exceptions import *
-from time import sleep
 
 
 def bad_response_handler(req_func):
