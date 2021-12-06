@@ -41,7 +41,8 @@ class FriendsMutualPipeline:
         self.mutual_ohe.fit(persons_list)
 
     def predict(self):
-        transformed_data = self.mutual_ohe.transform([[person['id'] for person in self[friend]] for friend in self.md])
+        transformed_data = self.mutual_ohe.transform([[person['id'] for person in self.md[friend]]
+                                                      for friend in self.md])
         self.map = self.pca.fit_transform(transformed_data)
 
     def fit_predict(self, person, access_token, interval=MASS_REQ_INTERVAL):
