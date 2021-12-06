@@ -7,6 +7,8 @@ from exceptions import APIResponseError
 
 
 def get_user_friends(access_token, user_id, v=VERSION, import_all=True, interval=MASS_REQ_INTERVAL, **parameters):
+    if type(user_id) == Person:
+        user_id = user_id['id']
     params = dict(access_token=access_token, user_id=user_id, v=v)
     params.update(parameters)
     try:
@@ -26,7 +28,7 @@ def get_user_friends(access_token, user_id, v=VERSION, import_all=True, interval
 
             sleep(interval)
 
-    return [Person(**d) for d in data]
+    return [Person(**d) for d in data['response']['items']]
 
 
 def get_mutual_dict(access_token, fl, v=VERSION, interval=MASS_REQ_INTERVAL, **parameters):
@@ -34,8 +36,9 @@ def get_mutual_dict(access_token, fl, v=VERSION, interval=MASS_REQ_INTERVAL, **p
     params = dict(access_token=access_token, v=v)
     params.update(parameters)
     for person in fl:
-        params['user_id'] = person.id
-        data = friends_get(params)
-        md[person.id] = Person(**data['response']['items'])
+        md[person['id']] = get_user_friends(access_token=access_token, user_id=person, interval=interval,
+                                            **parameters)
+
         sleep(interval)
+
     return md
