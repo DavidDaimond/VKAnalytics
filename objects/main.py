@@ -7,7 +7,7 @@ class VKObject:
         self.data = data
 
     def add_data(self, data):
-        self.data = self.data | data
+        self.data.update(data)
 
     def __getitem__(self, item):
         if not (type(item) is str):

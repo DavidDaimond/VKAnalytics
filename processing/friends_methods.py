@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.decomposition import PCA
+
 # from sklearn.cluster import KMeans
 
 
@@ -28,7 +29,7 @@ class MutualOHE:
             data = np.array([[friend] for friend in fl])
             return np.sum((data == self.checktable).astype(int), 0)
 
-    def transform_batch(self, fls):
+    def transform(self, fls):
         if not (self.checktable is None):
             t = np.zeros((self.checktable.shape[0],))
             for x in fls:
@@ -41,7 +42,7 @@ def mutuals_clustering_pca(md, clusterizator, return_clusters=True, **kwargs):
     persons_list = np.array(list(md.keys()))
 
     m_ohe.fit(persons_list)
-    transformed_data = m_ohe.transform_batch(list(md.values()))
+    transformed_data = m_ohe.transform(list(md.values()))
 
     pca = PCA(n_components=2)
     points = pca.fit_transform(transformed_data)
