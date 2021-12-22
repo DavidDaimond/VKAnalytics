@@ -39,7 +39,32 @@ class Post(VKObject):
     def __init__(self, **data):
         super(Post, self).__init__(**data)
 
+    def __str__(self):
+        return self['text'] if self['text'] else ''
+
 
 class Message(VKObject):
     def __init__(self, **data):
         super(Message, self).__init__(**data)
+
+    def __str__(self):
+        if self['text']:
+            return str(self['text'])
+        elif self['attachments']:
+            repr_obj = OBJECT_NAMES.get(self['attachments'][0]['type'])
+
+            return str(repr_obj)
+
+
+class Conversation(VKObject):
+    def __init__(self, **data):
+        super(Conversation, self).__init__(**data)
+        self.data['id'] = self.data['peer']['id']
+
+
+OBJECT_NAMES = {
+    'user': User,
+    'wall': Post,
+    'post': Post,
+    'message': Message
+}
