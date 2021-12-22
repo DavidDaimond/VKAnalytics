@@ -5,3 +5,4 @@ STANDARD_FIELDS = ','.join(['first_name', 'last_name', 'bdate',
                             'has_mobile', 'has_photo', 'photo_max_orig'])
 
 MASS_REQ_INTERVAL = 0.15
+

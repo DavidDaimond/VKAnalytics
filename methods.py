@@ -45,3 +45,7 @@ def users_get_subscriptions(params):
 
 def users_get_followers(params):
     return vk_request(method_name='users.getFollowers', params=params)
+
+
+def messages_get_history(params):
+    return vk_request(method_name='messages.getHistory', params=params)

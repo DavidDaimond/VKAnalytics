@@ -22,9 +22,9 @@ class VKObject:
         self.data.__setitem__(item, value)
 
 
-class Person(VKObject):
+class User(VKObject):
     def __init__(self, **data):
-        super(Person, self).__init__(**data)
+        super(User, self).__init__(**data)
 
     def add_friends(self, friends: list):
         """
@@ -39,3 +39,7 @@ class Post(VKObject):
     def __init__(self, **data):
         super(Post, self).__init__(**data)
 
+
+class Message(VKObject):
+    def __init__(self, **data):
+        super(Message, self).__init__(**data)

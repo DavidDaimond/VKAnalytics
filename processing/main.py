@@ -1,3 +1,3 @@
-from objects.main import Person
+from objects.main import User
 from exceptions import NoMethodError, NoDataError
 

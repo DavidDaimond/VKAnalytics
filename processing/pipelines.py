@@ -4,7 +4,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 
 from .friends_methods import MutualOHE
-from objects import Person
+from objects import User
 from utils import get_user_friends, get_mutual_dict
 
 from matplotlib import pyplot as plt

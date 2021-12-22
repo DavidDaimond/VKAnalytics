@@ -1,18 +1,18 @@
+import pickle
+from os.path import join
+
+
 class VKDataset:
     """
     parent class for all VKDatasets
     """
-    def __init__(self):
-        self.data = None
+    def __init__(self, **data):
+        self.data = data
 
-    def create(self, *args):
-        pass
-
-    def process_data(self, **params):
-        pass
+    def save(self, path, name='dataset'):
+        with open(join(path, name) + '.pkl', 'wb') as file:
+            pickle.dump(self, file)
 
 
-class UsersDataset(VKDataset):
-    """
-    class for parsing person data and structure it into datasets
-    """
+class ConversationDataset(VKDataset):
+    pass
