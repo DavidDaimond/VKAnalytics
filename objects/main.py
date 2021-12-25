@@ -1,3 +1,12 @@
+def parse_attachments(attlist):
+    _attlist = list(attlist)
+    for attachment in _attlist:
+        attachment_type = attachment['type']
+        if attachment_type in OBJECT_NAMES.keys():
+            attachment[attachment_type] = OBJECT_NAMES[attachment_type](**attachment[attachment_type])
+    return _attlist
+
+
 class VKObject:
     """
     Parent class for other VK objects. This class contain main structure of every Object classes.
@@ -46,6 +55,11 @@ class Post(VKObject):
 class Message(VKObject):
     def __init__(self, **data):
         super(Message, self).__init__(**data)
+        self.attachments = self.data.get('attachments')
+
+    def convert_attachments(self):
+        if self.data['attachments']:
+            self.attachments = parse_attachments(self.data['attachments'])
 
     def __str__(self):
         if self['text']:

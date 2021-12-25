@@ -6,6 +6,9 @@ from config import API_VERSION
 
 
 def create_conv_dataset(access_token, peer, v=API_VERSION, **parameters):
+    """
+    This function is used to create conversation dataset from zero, using only token and peer
+    """
     if is_vk_object(peer):
         peer = peer['id']
     params = {
