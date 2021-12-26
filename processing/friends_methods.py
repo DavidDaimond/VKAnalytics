@@ -4,11 +4,8 @@ Good news, everyone!
 I forgot the news
 """
 import numpy as np
-import matplotlib.pyplot as plt
 
-from sklearn.decomposition import PCA
-
-# from sklearn.cluster import KMeans
+from filters import can_access_closed
 
 
 class MutualOHE:

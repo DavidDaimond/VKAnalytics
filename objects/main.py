@@ -51,6 +51,9 @@ class Post(VKObject):
     def __str__(self):
         return self['text'] if self['text'] else ''
 
+    def __repr__(self):
+        return self['text'] if self['text'] else ''
+
 
 class Message(VKObject):
     def __init__(self, **data):
@@ -68,6 +71,17 @@ class Message(VKObject):
             repr_obj = OBJECT_NAMES.get(self['attachments'][0]['type'])
 
             return str(repr_obj)
+        else:
+            return 'empty message'
+
+    def __repr__(self):
+        if self['text']:
+            return str(self['text'])
+        elif self['attachments']:
+            repr_obj = OBJECT_NAMES.get(self['attachments'][0]['type'])
+            return str(repr_obj)
+        else:
+            return 'empty message'
 
 
 class Conversation(VKObject):
