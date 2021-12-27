@@ -1,7 +1,7 @@
 from .main import ConversationDataset
 
 from utils import is_vk_object, load_all_dialog
-from methods import messages_get_history
+from methods.messages import get_history
 from config import API_VERSION
 
 

@@ -1,7 +1,8 @@
 from time import sleep
 from collections import Counter
 
-from methods import friends_get, messages_get_history
+from methods.friends import get
+from methods.messages import get_history
 from config import API_VERSION, MASS_REQ_INTERVAL, GET_HISTORY_MAX_COUNT
 from objects import VKObject, User
 from exceptions import APIResponseError
@@ -12,14 +13,14 @@ def is_vk_object(obj):
 
 
 def load_all_dialog(params, interval=MASS_REQ_INTERVAL):
-    data = messages_get_history(params)['response']
+    data = get_history(params)['response']
     params = Counter(params)
     params['count'] = GET_HISTORY_MAX_COUNT
     params['offset'] += len(data['items'])
 
     while len(data['items']) < data['count']:
         sleep(interval)
-        resp = messages_get_history(params)['response']
+        resp = get_history(params)['response']
         data['items'] += resp['items']
         params['offset'] += GET_HISTORY_MAX_COUNT
     return data
@@ -31,7 +32,7 @@ def get_user_friends(access_token, user_id, v=API_VERSION, import_all=True, inte
     params = dict(access_token=access_token, user_id=user_id, v=v)
     params.update(parameters)
     try:
-        data = friends_get(params)
+        data = get(params)
     except APIResponseError as ex:
         return []
 
@@ -43,7 +44,7 @@ def get_user_friends(access_token, user_id, v=API_VERSION, import_all=True, inte
             offset = offset + len(data['response']['items'])
             params['offset'] = offset
 
-            data['response']['items'] += friends_get(params)['response']['items']
+            data['response']['items'] += get(params)['response']['items']
 
             sleep(interval)
 

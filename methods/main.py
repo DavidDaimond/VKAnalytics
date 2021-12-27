@@ -1,6 +1,5 @@
 import requests
 
-from config import *
 from exceptions import *
 
 
@@ -26,26 +25,3 @@ def vk_request(method_name, params):
     response = req.json()
 
     return response
-
-
-# The name of functions is similar to VK API methods, but translated from CamelCase to snake_case
-
-
-def users_get(params):
-    return vk_request(method_name='users.get', params=params)
-
-
-def friends_get(params):
-    return vk_request(method_name='friends.get', params=params)
-
-
-def users_get_subscriptions(params):
-    return vk_request(method_name='users.getSubscriptions', params=params)
-
-
-def users_get_followers(params):
-    return vk_request(method_name='users.getFollowers', params=params)
-
-
-def messages_get_history(params):
-    return vk_request(method_name='messages.getHistory', params=params)

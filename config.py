@@ -1,4 +1,4 @@
-API_VERSION = '5.81'
+API_VERSION = '5.131'
 
 STANDARD_FIELDS = ','.join(['first_name', 'last_name', 'bdate',
                             'can_see_all_posts', 'can_write_private_message', 'can_access_closed',
